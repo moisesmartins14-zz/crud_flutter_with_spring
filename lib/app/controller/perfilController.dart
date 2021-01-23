@@ -20,8 +20,6 @@ class PerfilController extends GetxController {
       if (perfil != null) {
         // ignore: deprecated_member_use, invalid_use_of_protected_member
         perfilList.value = perfil;
-
-        // ignore: invalid_use_of_protected_member
       }
     } finally {
       isLoading(false);

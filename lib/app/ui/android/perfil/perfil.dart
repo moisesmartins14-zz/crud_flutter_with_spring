@@ -1,5 +1,5 @@
 import 'package:crud/app/controller/perfilController.dart';
-import 'package:crud/app/ui/android/perfilCardInfo.dart';
+import 'file:///C:/Users/moisesmartins/Desktop/GitHub/android/crud_flutter_with_spring/lib/app/ui/android/perfil/perfilCardInfo.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

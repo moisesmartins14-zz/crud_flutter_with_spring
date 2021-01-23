@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:crud/app/data/model/perfilModel.dart';
+import 'package:crud/app/data/model/perfilModelo.dart';
 import 'package:http/http.dart' as http;
 
 class RemoteServices {
   static var client = http.Client();
-  static var apiUrl = "http://192.168.0.108:8080/pessoa";
+  static var apiUrl = "http://192.168.43.34:8080/pessoa";
 
   // ignore: missing_return
   static Future<List<Perfil>> buscarPerfil() async {
@@ -25,7 +26,8 @@ class RemoteServices {
     var response = await client.get('$apiUrl/$idPerfil');
     if (response.statusCode == 200) {
       var jsonString = response.body;
-      print(jsonString);
+      print('Dados 1: $jsonString');
+      print('Dados 2: ${perfilFromJsonById(jsonString).toString()}');
       return perfilFromJsonById(jsonString);
     } else {
       throw Exception('A network error occurred');

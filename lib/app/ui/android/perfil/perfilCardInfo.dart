@@ -56,6 +56,7 @@ class MyCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10)),
                     onSelected: (result) {
                       if (result == 1) {
+                        //arguments: passando o id do perfil para outra tela onde vou fazer um findById
                         Get.toNamed('/editarPerfil', arguments: perfil.id);
                       } else if (result == 2) {
                         Flushbar(

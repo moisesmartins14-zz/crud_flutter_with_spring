@@ -1,4 +1,5 @@
 import 'package:crud/app/data/model/perfilModel.dart';
+import 'package:crud/app/data/model/perfilModelo.dart';
 import 'package:crud/app/data/provider/remoteServices.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -9,35 +10,30 @@ class EditPerfilController extends GetxController {
   var isLoading = true.obs;
   var perfilEdit = Perfil().obs;
 
-
   EditPerfilController({this.perfil});
 
-  TextEditingController nomeController = TextEditingController();
-  TextEditingController cpfController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController telefoneController = TextEditingController();
+  final nomeController = TextEditingController();
+  final cpfController = TextEditingController();
+  final emailController = TextEditingController();
+  final telefoneController = TextEditingController();
+  var formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
 
   @override
   void onInit() {
+    // recuperando o id da tela anterior e passando como parametro para funçao
     var idPerfil = Get.arguments;
     buscarPerfilPeloId(idPerfil);
-    // print(idPerfil);
-
-    // print(' nome: ${Perfil.fromJson()}');
-    // cpfController.text = perfil.cpf;
-    // emailController.text =perfil.email;
-    // telefoneController.text = perfil.telefone;
     // TODO: implement onInit
     super.onInit();
-
   }
 
   void buscarPerfilPeloId(int idPerfil) async {
     try {
       isLoading(true);
-      var perfil = await RemoteServices.buscarPerfilPeloId(idPerfil);
-      if (perfil != null) {
-        perfilEdit.value = perfil;
+      var dadosByid = await RemoteServices.buscarPerfilPeloId(idPerfil);
+      if (dadosByid != null) {
+        perfilEdit.value = dadosByid;
       }
     } finally {
       isLoading(false);
