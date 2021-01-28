@@ -1,12 +1,10 @@
 import 'dart:convert';
-
 import 'package:crud/app/data/model/perfilModel.dart';
-import 'package:crud/app/data/model/perfilModelo.dart';
 import 'package:http/http.dart' as http;
 
 class RemoteServices {
   static var client = http.Client();
-  static var apiUrl = "http://192.168.43.34:8080/pessoa";
+  static var apiUrl = "http://192.168.0.108:8080/pessoa";
 
   // ignore: missing_return
   static Future<List<Perfil>> buscarPerfil() async {
@@ -14,7 +12,6 @@ class RemoteServices {
     if (response.statusCode == 200) {
       var jsonString = response.body;
       print(jsonString);
-
       return perfilFromJson(jsonString);
     } else {
       throw Exception('A network error occurred');
@@ -27,7 +24,6 @@ class RemoteServices {
     if (response.statusCode == 200) {
       var jsonString = response.body;
       print('Dados 1: $jsonString');
-      print('Dados 2: ${perfilFromJsonById(jsonString).toString()}');
       return perfilFromJsonById(jsonString);
     } else {
       throw Exception('A network error occurred');
@@ -36,20 +32,27 @@ class RemoteServices {
   }
 
   static Future<Perfil> updatePerfil(int id, Perfil perfil) async {
-    Map dados = {
-      "nome": perfil.nome,
-      "cpf": perfil.cpf,
-      "telefone": perfil.telefone,
-      "email": perfil.email
+    Map data = {
+      // "id": perfil.id,
+      "nome": perfil.nome.toString(),
+      "cpf": perfil.cpf.toString(),
+      "email": perfil.email.toString(),
+      "telefone": perfil.telefone.toString()
     };
-
-    final http.Response response = await client.put('$apiUrl/$id',
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8'
-        },
-        body: jsonEncode(dados));
+    var body = jsonEncode(data);
+    final response = await client.put(
+      '$apiUrl/$id',
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Charset': 'utf-8'
+      },
+      body: body,
+    );
+    print(response.statusCode);
+    print('id: ${perfil.id}');
+    print(data);
     if (response.statusCode == 200) {
-      return Perfil.fromJson(json.decode(response.body));
+      return Perfil.fromJson(jsonDecode(response.body));
     } else
       throw Exception('Failed to update a case');
   }

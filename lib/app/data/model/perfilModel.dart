@@ -8,7 +8,6 @@ Perfil perfilFromJsonById(String str) => Perfil.fromJson(json.decode(str));
 
 String perfilToJsonById(Perfil data) => json.encode(data.toJson());
 
-
 class Perfil {
   Perfil({
     this.id,

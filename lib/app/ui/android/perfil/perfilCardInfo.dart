@@ -57,7 +57,13 @@ class MyCard extends StatelessWidget {
                     onSelected: (result) {
                       if (result == 1) {
                         //arguments: passando o id do perfil para outra tela onde vou fazer um findById
-                        Get.toNamed('/editarPerfil', arguments: perfil.id);
+                        Get.toNamed('/editarPerfil', arguments: [
+                          perfil.id,
+                          perfil.nome,
+                          perfil.cpf,
+                          perfil.email,
+                          perfil.telefone
+                        ]);
                       } else if (result == 2) {
                         Flushbar(
                           message: "${perfil.id}",

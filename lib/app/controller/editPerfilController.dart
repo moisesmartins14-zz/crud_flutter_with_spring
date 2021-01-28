@@ -1,5 +1,4 @@
 import 'package:crud/app/data/model/perfilModel.dart';
-import 'package:crud/app/data/model/perfilModelo.dart';
 import 'package:crud/app/data/provider/remoteServices.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -12,6 +11,7 @@ class EditPerfilController extends GetxController {
 
   EditPerfilController({this.perfil});
 
+  int idPerfil;
   final nomeController = TextEditingController();
   final cpfController = TextEditingController();
   final emailController = TextEditingController();
@@ -22,8 +22,14 @@ class EditPerfilController extends GetxController {
   @override
   void onInit() {
     // recuperando o id da tela anterior e passando como parametro para funçao
-    var idPerfil = Get.arguments;
-    buscarPerfilPeloId(idPerfil);
+    var dadosEdit = Get.arguments;
+    // buscarPerfilPeloId(idPerfil);
+    idPerfil = dadosEdit[0];
+    nomeController.text = dadosEdit[1];
+    cpfController.text = dadosEdit[2];
+    emailController.text = dadosEdit[3];
+    telefoneController.text = dadosEdit[4];
+
     // TODO: implement onInit
     super.onInit();
   }
@@ -33,6 +39,7 @@ class EditPerfilController extends GetxController {
       isLoading(true);
       var dadosByid = await RemoteServices.buscarPerfilPeloId(idPerfil);
       if (dadosByid != null) {
+        // ignore: deprecated_member_use, invalid_use_of_protected_member
         perfilEdit.value = dadosByid;
       }
     } finally {

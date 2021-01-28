@@ -8,6 +8,6 @@ void main() {
     title: "crud",
     debugShowCheckedModeBanner: false,
     getPages: AppPages.routes,
-    initialRoute: '/home',
+    initialRoute: '/perfil',
   ));
 }

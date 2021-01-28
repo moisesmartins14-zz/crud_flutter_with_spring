@@ -1,16 +1,23 @@
 import 'package:crud/app/data/model/perfilModel.dart';
 import 'package:crud/app/data/provider/remoteServices.dart';
+import 'package:crud/app/ui/android/perfil/perfil.dart';
+import 'package:crud/app/ui/android/perfil/perfilCardInfo.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 
 class PerfilController extends GetxController {
   var isLoading = true.obs;
   var perfilList = List<Perfil>().obs;
-
+  BuildContext context;
   @override
   void onInit() {
     // TODO: implement onInit
-    super.onInit();
     buscarPerfil();
+    perfilList.clear();
+    refreshList(context);
+    super.onInit();
   }
 
   void buscarPerfil() async {
@@ -26,5 +33,46 @@ class PerfilController extends GetxController {
     }
   }
 
+  Future<Null> refreshList(BuildContext context) async {
+    await Future.delayed(Duration(seconds: 1));
+    perfilList.clear();
+    buscarPerfil();
+    callApi();
+    snackMsg(context);
+    return null;
+  }
 
+  Widget callApi() {
+    //chama api e retorna cards com os dados
+    return Obx(
+          () {
+        if (perfilController.isLoading.value) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else
+          return ListView.builder(
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: false,
+            itemCount: perfilController.perfilList.length,
+            itemBuilder: (context, index) {
+              return MyCard(perfilController.perfilList[index]);
+            },
+          );
+      },
+    );
+  }
+
+  Widget snackMsg(BuildContext context) {
+    Flushbar(
+      message: "Atualizado",
+      duration: Duration(seconds: 2),
+      flushbarPosition: FlushbarPosition.BOTTOM,
+    )
+      ..show(context);
+
+    return null;
+  }
 }

@@ -1,13 +1,18 @@
 import 'package:crud/app/controller/editPerfilController.dart';
 import 'package:crud/app/data/model/perfilModel.dart';
+import 'package:crud/app/data/provider/remoteServices.dart';
+import 'package:crud/app/ui/android/perfil/perfil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 EditPerfilController editPerfilController;
 
 class MyTextFields extends StatelessWidget {
-  final EditPerfilController editPerfilController = Get.put(EditPerfilController());
+  final EditPerfilController editPerfilController =
+      Get.put(EditPerfilController());
   final Perfil perfil;
+
   MyTextFields({this.perfil});
 
   @override
@@ -142,13 +147,24 @@ class MyTextFields extends StatelessWidget {
                       ),
                       color: Colors.green,
                       onPressed: () {
-                        if (editPerfilController.formKey.currentState.validate()) {
-                          //TODO implementar resquest put
-                          // Get.back();
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text('Dados processados com sucesso')));
-                        } else
-                          return null;
+                        RemoteServices.updatePerfil(
+                            editPerfilController.idPerfil,
+                            Perfil(
+                                nome: editPerfilController.nomeController.text,
+                                cpf: editPerfilController.cpfController.text,
+                                email:
+                                    editPerfilController.emailController.text,
+                                telefone: editPerfilController
+                                    .telefoneController.text));
+
+                          Get.back();
+                        // if (editPerfilController.formKey.currentState
+                        //     .validate()) {
+                        //   // perfilController.perfilList.clear();
+                        //   Scaffold.of(context).showSnackBar(SnackBar(
+                        //       content: Text('Dados processados com sucesso')));
+                        // } else
+                        //   return null;
                       }),
                 ),
                 SizedBox(
