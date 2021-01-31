@@ -15,7 +15,14 @@ class PerfilPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.person_add),
+              color: Colors.white,
+              onPressed: (){
+                Get.toNamed('addPerfil');
+              })
+        ],
         title: Text('Perfis'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
@@ -23,25 +30,25 @@ class PerfilPage extends StatelessWidget {
         children: [
           Expanded(
               child: RefreshIndicator(
-                child: Stack(
-                  children: [
-                    Obx(
-                          () {
-                        if (perfilController.isLoading.value) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else
-                          return perfilController.callApi();
-                      },
-                    ),
-                  ],
+            child: Stack(
+              children: [
+                Obx(
+                  () {
+                    if (perfilController.isLoading.value) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else
+                      return perfilController.callApi();
+                  },
                 ),
-                onRefresh: () async {
-                  await perfilController.refreshList(context);
-                  ;
-                },
-              ))
+              ],
+            ),
+            onRefresh: () async {
+              await perfilController.refreshList(context);
+              ;
+            },
+          ))
         ],
       ),
     );

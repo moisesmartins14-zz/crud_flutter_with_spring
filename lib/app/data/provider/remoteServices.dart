@@ -56,4 +56,28 @@ class RemoteServices {
     } else
       throw Exception('Failed to update a case');
   }
+
+  static Future<Perfil> criarPerfil(Perfil perfil) async {
+    Map data = {
+      "nome": perfil.nome.toString(),
+      "cpf": perfil.cpf.toString(),
+      "email": perfil.email.toString(),
+      "telefone": perfil.telefone.toString()
+    };
+    var body = jsonEncode(data);
+    final response = await client.post(
+      '$apiUrl',
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Charset': 'utf-8'
+      },
+      body: body,
+    );
+    print(response.statusCode);
+    print(data);
+    if (response.statusCode == 200) {
+      return Perfil.fromJson(jsonDecode(response.body));
+    } else
+      throw Exception('Failed to update a case');
+  }
 }
