@@ -6,6 +6,7 @@ import 'package:crud/app/ui/android/perfil/perfil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:the_validator/the_validator.dart';
 
 EditPerfilController editPerfilController;
 PerfilController perfilController;
@@ -39,13 +40,8 @@ class MyTextFields extends StatelessWidget {
                         // initialValue: perfil.nome,
                         textInputAction: TextInputAction.next,
                         controller: editPerfilController.nomeController,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Nome em branco';
-                          } else {
-                            return null;
-                          }
-                        },
+                        validator:
+                            FieldValidator.required(message: 'Nome em branco!'),
                         decoration: InputDecoration(
                             border: OutlineInputBorder(), labelText: "Nome"),
                       ),
@@ -99,9 +95,15 @@ class MyTextFields extends StatelessWidget {
                           editPerfilController.telefoneMaskFormatter
                         ],
                         controller: editPerfilController.telefoneController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'Telefone em branco';
+                            return 'Telefone em branco!';
+                          } else if (editPerfilController.telefoneMaskFormatter
+                                  .getUnmaskedText()
+                                  .length <
+                              11) {
+                            return 'Numero incompleto!';
                           } else {
                             return null;
                           }

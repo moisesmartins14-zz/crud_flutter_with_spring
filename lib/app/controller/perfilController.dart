@@ -10,13 +10,14 @@ import 'package:get/state_manager.dart';
 class PerfilController extends GetxController {
   var isLoading = true.obs;
   var perfilList = List<Perfil>().obs;
-  BuildContext context;
+  // BuildContext context;
   @override
   void onInit() {
     // TODO: implement onInit
     buscarPerfil();
-    perfilList.clear();
-    refreshList(context);
+    print("ola");
+    // perfilList.clear();
+    // refreshList();
     super.onInit();
   }
 

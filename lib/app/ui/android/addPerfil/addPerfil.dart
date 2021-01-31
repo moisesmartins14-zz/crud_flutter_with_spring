@@ -21,7 +21,6 @@ class AddPerfil extends StatelessWidget {
           automaticallyImplyLeading: false,
         ),
         body: new InkWell(
-
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             focusColor: Colors.transparent,
@@ -115,13 +114,17 @@ class AddPerfil extends StatelessWidget {
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
-                                  if (addPerfilController.telefoneMaskFormatter
+                                  if (value.isEmpty) {
+                                    return 'Telefone em branco!';
+                                  } else if (addPerfilController
+                                          .telefoneMaskFormatter
                                           .getUnmaskedText()
                                           .length <
                                       11) {
-                                    return "Numero incompleto!";
-                                  } else
+                                    return 'Numero incompleto!';
+                                  } else {
                                     return null;
+                                  }
                                 },
                                 textInputAction: TextInputAction.done,
                                 decoration: InputDecoration(
