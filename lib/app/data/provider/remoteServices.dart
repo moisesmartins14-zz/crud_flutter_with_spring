@@ -11,7 +11,7 @@ class RemoteServices {
     var response = await client.get(apiUrl);
     if (response.statusCode == 200) {
       var jsonString = response.body;
-      print(jsonString);
+      // print(jsonString);
       return perfilFromJson(jsonString);
     } else {
       throw Exception('A network error occurred');
@@ -23,7 +23,7 @@ class RemoteServices {
     var response = await client.get('$apiUrl/$idPerfil');
     if (response.statusCode == 200) {
       var jsonString = response.body;
-      print('Dados 1: $jsonString');
+      // print('Dados 1: $jsonString');
       return perfilFromJsonById(jsonString);
     } else {
       throw Exception('A network error occurred');
@@ -48,9 +48,9 @@ class RemoteServices {
       },
       body: body,
     );
-    print(response.statusCode);
-    print('id: ${perfil.id}');
-    print(data);
+    // print(response.statusCode);
+    // print('id: ${perfil.id}');
+    // print(data);
     if (response.statusCode == 200) {
       return Perfil.fromJson(jsonDecode(response.body));
     } else
@@ -73,11 +73,24 @@ class RemoteServices {
       },
       body: body,
     );
-    print(response.statusCode);
-    print(data);
+    // print(response.statusCode);
+    // print(data);
     if (response.statusCode == 200) {
       return Perfil.fromJson(jsonDecode(response.body));
     } else
       throw Exception('Failed to update a case');
+  }
+
+  Future<Perfil> deletePerfil(int idPerfil) async {
+    final response = await client.delete('$apiUrl/$idPerfil',
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Charset': 'utf-8'
+        });
+    if (response.statusCode == 200) {
+      return Perfil.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to delete Perfil');
+    }
   }
 }
