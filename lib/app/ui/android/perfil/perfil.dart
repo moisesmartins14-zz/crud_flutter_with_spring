@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 
 final PerfilController perfilController = Get.put(PerfilController());
 
-// final BuildContext context;
-// ignore: must_be_immutable
 class PerfilPage extends StatelessWidget {
   GlobalKey<RefreshIndicatorState> refreshKey;
 
@@ -19,7 +17,7 @@ class PerfilPage extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.person_add),
               color: Colors.white,
-              onPressed: (){
+              onPressed: () {
                 Get.toNamed('addPerfil');
               })
         ],
@@ -54,12 +52,3 @@ class PerfilPage extends StatelessWidget {
     );
   }
 }
-//////WIDGET///////
-
-// Widget build(BuildContext context) {
-//   final _screenSize = MediaQuery.of(context).size;
-//
-//   return Container(
-//     height: _screenSize.height * 0.2,
-//   );
-// }

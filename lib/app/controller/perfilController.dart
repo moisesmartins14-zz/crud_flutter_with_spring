@@ -10,26 +10,25 @@ import 'package:get/state_manager.dart';
 class PerfilController extends GetxController {
   var isLoading = true.obs;
   var perfilList = List<Perfil>().obs;
-  // BuildContext context;
+  BuildContext context;
   @override
   void onInit() {
     // TODO: implement onInit
     buscarPerfil();
-    print("ola");
-    // perfilList.clear();
-    // refreshList();
     super.onInit();
   }
 
   void buscarPerfil() async {
     try {
       isLoading(true);
+      // print('exibir perfil');
       var perfil = await RemoteServices.buscarPerfil();
       if (perfil != null) {
         // ignore: deprecated_member_use, invalid_use_of_protected_member
         perfilList.value = perfil;
       }
     } finally {
+      // print('carregando');
       isLoading(false);
     }
   }
@@ -46,8 +45,8 @@ class PerfilController extends GetxController {
   Widget callApi() {
     //chama api e retorna cards com os dados
     return Obx(
-          () {
-        if (perfilController.isLoading.value) {
+      () {
+        if (isLoading.value) {
           return Center(
             child: CircularProgressIndicator(),
           );
@@ -57,9 +56,9 @@ class PerfilController extends GetxController {
                 parent: AlwaysScrollableScrollPhysics()),
             scrollDirection: Axis.vertical,
             shrinkWrap: false,
-            itemCount: perfilController.perfilList.length,
+            itemCount: perfilList.length,
             itemBuilder: (context, index) {
-              return MyCard(perfilController.perfilList[index]);
+              return MyCard(perfilList[index]);
             },
           );
       },
@@ -71,8 +70,7 @@ class PerfilController extends GetxController {
       message: "Atualizado",
       duration: Duration(seconds: 2),
       flushbarPosition: FlushbarPosition.BOTTOM,
-    )
-      ..show(context);
+    )..show(context);
 
     return null;
   }

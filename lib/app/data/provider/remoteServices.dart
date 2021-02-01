@@ -81,7 +81,7 @@ class RemoteServices {
       throw Exception('Failed to update a case');
   }
 
-  Future<Perfil> deletePerfil(int idPerfil) async {
+  Future<Perfil> deletarPerfil(int idPerfil) async {
     final response = await client.delete('$apiUrl/$idPerfil',
         headers: <String, String>{
           'Content-Type': 'application/json',
