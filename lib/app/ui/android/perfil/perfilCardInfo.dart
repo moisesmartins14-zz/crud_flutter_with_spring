@@ -1,8 +1,11 @@
+import 'package:crud/app/controller/perfilController.dart';
 import 'package:crud/app/data/model/perfilModel.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:crud/app/data/provider/remoteServices.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+final PerfilController perfilController = Get.put(PerfilController());
 
 class MyCard extends StatelessWidget {
   final Perfil perfil;
@@ -65,12 +68,41 @@ class MyCard extends StatelessWidget {
                           perfil.telefone
                         ]);
                       } else if (result == 2) {
-                        Flushbar(
-                          message: "${perfil.id}",
-                          duration: Duration(seconds: 2),
-                          flushbarPosition: FlushbarPosition.BOTTOM,
-                        )..show(context);
-                        print(perfil.id);
+                        // print('ola');
+                        Get.defaultDialog(
+                            title: 'Tem certeza?',
+                            middleText:
+                                'Você ira apagar o perfil de ${perfil.nome}',
+                            radius: 10,
+                            actions: [
+                              FlatButton(
+                                child: Text(
+                                  'Cancelar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                color: Colors.green,
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                              SizedBox(width: 15),
+                              RaisedButton(
+                                child: Text(
+                                  'Deletar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                color: Colors.red,
+                                onPressed: () {
+                                  RemoteServices().deletarPerfil(perfil.id);
+                                  perfilController.refreshList(context);
+                                  Get.back();
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                              )
+                            ]);
                       }
                     },
                     elevation: 5,
